@@ -55,7 +55,7 @@ public class Cliente : EntidadeBase
 
     #region Construtores
     public Cliente() { }
-    public Cliente(string nome, string email, string senha, string endereco)
+    public Cliente(string nome, string email, string senha)
     {
         _nome = nome;
         _email = email;

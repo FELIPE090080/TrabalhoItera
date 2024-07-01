@@ -37,7 +37,7 @@ public class Lote : EntidadeBase
             _tamanho = value;
         }
     }
-    public decimal Numero 
+    public int Numero 
     {
         get { return _numero; }
         set
@@ -71,11 +71,12 @@ public class Lote : EntidadeBase
     #region Construtores
     public Lote() {}
 
-    public Lote( string rua, int numero, decimal valor )
+    public Lote( string rua, int numero, decimal valor, int tamanho )
     {
         _rua = rua;
         _numero = numero;
-        Valor = valor;
+        _valor = valor;
+        _tamanho = tamanho;
         Disponivel = true;
     }
     #endregion
