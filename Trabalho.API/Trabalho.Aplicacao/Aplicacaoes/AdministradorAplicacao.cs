@@ -6,7 +6,7 @@ public class AdministradorAplicacao : IAdministradorAplicacao
 
     private readonly IAdministradorRepositorio _administradorRepositorio;
 
-    public AdministradorAplicacao(AdministradorRepositorio administradorRepositorio)
+    public AdministradorAplicacao(IAdministradorRepositorio administradorRepositorio)
     {
         _administradorRepositorio = administradorRepositorio;
 

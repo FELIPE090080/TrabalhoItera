@@ -8,7 +8,7 @@ public class TrabalhoContexto : DbContext
     public DbSet<Lote> Lotes { get; set; }
     public DbSet<Administrador> Administradores { get; set; }
 
-    public TrabalhoContexto(DbContextOptions options) : base(options)
+    public TrabalhoContexto(DbContextOptions<TrabalhoContexto> options) : base(options)
     {
         _options = options;
     }

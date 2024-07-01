@@ -77,6 +77,11 @@ public class LoteController : ControllerBase
     {
         try
         {
+            if (string.IsNullOrEmpty(loteCriar.Rua))
+            {
+                return BadRequest("Rua não pode ser nula ou vazia.");
+            }
+
             var loteDominio = new Lote(loteCriar.Rua, loteCriar.Numero, loteCriar.Valor, loteCriar.Tamanho);
 
             var loteId = await _loteAplicacao.CriarAsync(loteDominio);

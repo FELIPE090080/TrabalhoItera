@@ -89,27 +89,35 @@ public class ClienteController : ControllerBase
 
     [HttpPut]
     [Route("Atualizar/{clienteId}")]
-    public async Task<IActionResult> Atualizar([FromRoute] int clienteId, [FromBody] ClienteAtualizar cliente)
+    public async Task<IActionResult> AtualizarCliente([FromBody] ClienteAtualizar cliente, [FromRoute] int clienteId)
     {
         try
         {
-            var clienteDominio = await _clienteAplicacao.ObterAsync(clienteId);
+            var clienteAtualizar = await _clienteAplicacao.ObterAsync(clienteId);
 
-            clienteDominio = new Cliente()
+            if (clienteAtualizar == null)
             {
-                Nome = cliente.Nome,
-                Email = cliente.Email,
-            };
+                return NotFound("Cliente não encontrado.");
+            }
 
-            await _clienteAplicacao.AtualizarAsync(clienteDominio);
+            if (cliente.Email != null)
+            {
+                clienteAtualizar.Email = cliente.Email;
+            }
 
-            return Ok(clienteDominio);
+            if (cliente.Senha != null)
+            {
+                clienteAtualizar.Senha = cliente.Senha;
+            }
+
+            await _clienteAplicacao.AtualizarAsync(clienteAtualizar);
+
+            return Ok(clienteAtualizar);
         }
         catch (Exception ex)
         {
             return BadRequest(ex.Message);
         }
-
     }
 
     [HttpPut]
@@ -143,7 +151,7 @@ public class ClienteController : ControllerBase
                 Id = clienteDominio.Id,
                 Nome = clienteDominio.Nome,
                 Email = clienteDominio.Email,
-                Lotes = clienteDominio.Lotes.ToList(), 
+                Lotes = clienteDominio.Lotes.ToList(),
             };
 
             return Ok(clienteLogado);

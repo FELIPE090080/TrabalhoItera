@@ -36,26 +36,37 @@ public class AdministradorController : ControllerBase
             return BadRequest($"{ex.GetType().Name}  -  {ex.Message}");
         }
     }
-
     [HttpPut]
-    [Route("Atualizar")]
-    public async Task<IActionResult> AtualizarAdministrador([FromBody]AdministradorAtualizar administrador, [FromRoute] int administradorId)
+    [Route("Atualizar/{administradorId}")]
+    public async Task<IActionResult> AtualizarAdministrador([FromBody] AdministradorAtualizar administrador, [FromRoute] int administradorId)
     {
         try
         {
             var administradorAtualizar = await _administradorAplicacao.ObterAsync(administradorId);
 
-            administradorAtualizar = new Administrador()
+            if (administradorAtualizar == null)
             {
-                Nome = administrador.Nome,
-            };
+                return NotFound("Administrador não encontrado.");
+            }
+
+            if (administrador.Email != null)
+            {
+                administradorAtualizar.Email = administrador.Email;
+            }
+
+            if (administrador.Senha != null)
+            {
+                administradorAtualizar.Senha = administrador.Senha;
+            }
+
+            await _administradorAplicacao.AtualizarAsync(administradorAtualizar);
 
             return Ok(administradorAtualizar);
         }
         catch (Exception ex)
         {
             return BadRequest(ex.Message);
-        }   
+        }
     }
 
     [HttpPut]
