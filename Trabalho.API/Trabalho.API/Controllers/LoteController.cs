@@ -95,20 +95,20 @@ public class LoteController : ControllerBase
     }
     [HttpPut]
     [Route("Atualizar/{loteId}")]
-    public async Task<IActionResult> Atualizar([FromRoute] int loteId, [FromBody] LoteAtualizar lote)
+    public async Task<IActionResult> AtualizarCliente([FromBody] LoteAtualizar lote, [FromRoute] int loteId)
     {
         try
         {
-            var loteDominio = await _loteAplicacao.ObterAsync(loteId);
+            var loteAtualizar = await _loteAplicacao.ObterAsync(loteId);
 
-            loteDominio = new Lote()
+            if (loteAtualizar == null)
             {
-                Valor = lote.Valor,
-            };
+                return NotFound("Lote não encontrado.");
+            }
 
-            await _loteAplicacao.AtualizarAsync(loteDominio);
+            await _loteAplicacao.AtualizarAsync(loteAtualizar);
 
-            return Ok(loteDominio);
+            return Ok(loteAtualizar);
         }
         catch (Exception ex)
         {
@@ -125,6 +125,21 @@ public class LoteController : ControllerBase
             await _loteAplicacao.DeletarAsync(loteId);
 
             return Ok("Lote Deletado");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPut]
+    [Route("Restaurar/{loteId}")]
+    public async Task<IActionResult> Restaurar([FromRoute] int loteId)
+    {
+        try
+        {
+            await _loteAplicacao.RestaurarAsync(loteId);
+            return Ok("Lote Restaurado");
         }
         catch (Exception ex)
         {
