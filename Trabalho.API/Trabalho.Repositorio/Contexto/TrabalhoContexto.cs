@@ -7,6 +7,7 @@ public class TrabalhoContexto : DbContext
     public DbSet<Cliente> Clientes { get; set; }
     public DbSet<Lote> Lotes { get; set; }
     public DbSet<Administrador> Administradores { get; set; }
+    public DbSet<LoteCliente> LoteClientes { get; set; }
 
     public TrabalhoContexto(DbContextOptions<TrabalhoContexto> options) : base(options)
     {
@@ -25,5 +26,6 @@ public class TrabalhoContexto : DbContext
         modelBuilder.ApplyConfiguration(new ClienteConfiguracoes());
         modelBuilder.ApplyConfiguration(new LoteConfiguracoes());
         modelBuilder.ApplyConfiguration(new AdministradorConfiguracoes());
+        modelBuilder.ApplyConfiguration(new LoteClienteConfiguracoes());
     }
 }

@@ -90,10 +90,9 @@ public class LoteController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            return BadRequest(ex.InnerException?.Message ?? ex.Message);
         }
     }
-
     [HttpPut]
     [Route("Atualizar/{loteId}")]
     public async Task<IActionResult> Atualizar([FromRoute] int loteId, [FromBody] LoteAtualizar lote)

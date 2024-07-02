@@ -63,9 +63,9 @@ public class Lote : EntidadeBase
             _valor = value;
         }
     }
+
+    public List<LoteCliente> LoteClientes { get; set; }
     public bool Disponivel { get; set; }
-    public int ClienteId { get; set; }
-    public Cliente Cliente { get; set; }
     #endregion
 
     #region Construtores

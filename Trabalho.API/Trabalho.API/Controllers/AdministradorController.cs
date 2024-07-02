@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Trabalho.API;
 
 namespace Trabalho.Api;
 
@@ -36,6 +37,7 @@ public class AdministradorController : ControllerBase
             return BadRequest($"{ex.GetType().Name}  -  {ex.Message}");
         }
     }
+
     [HttpPut]
     [Route("Atualizar/{administradorId}")]
     public async Task<IActionResult> AtualizarAdministrador([FromBody] AdministradorAtualizar administrador, [FromRoute] int administradorId)

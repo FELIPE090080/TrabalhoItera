@@ -15,10 +15,6 @@ public class LoteConfiguracoes : IEntityTypeConfiguration<Lote>
         builder.Property(nameof(Lote.Tamanho)).HasColumnName("Tamanho").IsRequired();
         builder.Property(nameof(Lote.Disponivel)).HasColumnName("Disponível").IsRequired();
 
-        builder.HasOne(lote => lote.Cliente)
-        .WithMany(lote => lote.Lotes)
-        .HasForeignKey(lote => lote.ClienteId)
-        .OnDelete(DeleteBehavior.Restrict);
 
     }
 }

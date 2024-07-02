@@ -49,6 +49,7 @@ public class Cliente : EntidadeBase
         }
     }
 
+    public List<LoteCliente> LoteClientes { get; set; }
     public List<Lote> Lotes { get; set; }
     public bool Ativo { get; set; }
     #endregion

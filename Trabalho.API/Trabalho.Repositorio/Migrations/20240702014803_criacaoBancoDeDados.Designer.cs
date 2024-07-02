@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Trabalho.API.Migrations
 {
     [DbContext(typeof(TrabalhoContexto))]
-    partial class TrabalhoContextoModelSnapshot : ModelSnapshot
+    [Migration("20240702014803_criacaoBancoDeDados")]
+    partial class criacaoBancoDeDados
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,8 +136,10 @@ namespace Trabalho.API.Migrations
             modelBuilder.Entity("LoteCliente", b =>
                 {
                     b.Property<int>("Id")
-                        .HasColumnType("int")
-                        .HasColumnName("LoteClienteID");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("ClienteId")
                         .HasColumnType("int");
@@ -144,9 +149,11 @@ namespace Trabalho.API.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ClienteId");
+
                     b.HasIndex("LoteId");
 
-                    b.ToTable("LoteCliente", (string)null);
+                    b.ToTable("LoteCliente");
                 });
 
             modelBuilder.Entity("Lote", b =>
@@ -160,7 +167,7 @@ namespace Trabalho.API.Migrations
                 {
                     b.HasOne("Cliente", "Cliente")
                         .WithMany("LoteClientes")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
